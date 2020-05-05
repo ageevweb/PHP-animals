@@ -35,6 +35,15 @@
   // update end--------------------------------------------------------------------
 
 
+  // insert---------------------------------------------------------------------------
+    $sql = "INSERT INTO goods(name, description, cost, amount, image) VALUES ('cherry', 'red', 23, 445, 'cherry.png')";
+    if(mysqli_query($conn, $sql)){
+      echo "new record successfully";
+    } else {
+      echo "error:" .$sql.mysqli_error($conn);
+    }
+  // insert end---------------------------------------------------------------------------
+
 
 
   $a = select($conn);

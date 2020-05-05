@@ -13,34 +13,37 @@
 
 
 <?php
-  require_once('config.php');
+  require_once 'config.php';
+  require_once 'function.php';
 
-  $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
-  mysqli_set_charset($conn, "utf8");
-  // check connection
-  if(!$conn){
-    die("Connection feiled" . mysqli_connect_error());
-  }
-  // запрос в базу
-  $sql = "SELECT * FROM goods";
-  // $sql = "SELECT name,cost FROM goods WHERE cost > 30";
-  $result = mysqli_query($conn, $sql);
+  $conn = connect();
 
-  var_dump(mysqli_num_rows($result)); // колличество строк в таблице
+  // update--------------------------------------------------------------------
+  // $newPrice = 55;
+  // $id = 1;
+  // $newName = 'bananaaaa';
 
-  $a = [];
+  // $sql = "UPDATE goods SET cost=".$newPrice." WHERE id=".$id;
+  // $sql = "UPDATE goods SET name='".$newName."' WHERE id=".$id;
+  // строковое значение обернуть еще в одни скобки ''
 
-  if(mysqli_num_rows($result) > 0){
-    while($row = mysqli_fetch_assoc($result)){
-      $a[] = $row;
-    } 
-  } else { 
-    echo '0 results' ;
-  }
-  
+  // if(mysqli_query($conn, $sql)){
+  //   echo "updated successfully";
+  // } else {
+  //   echo "error updating".mysqli_error($conn);
+  // }
+  // update end--------------------------------------------------------------------
+
+
+
+
+  $a = select($conn);
+
   echo '<pre>';
   print_r($a);
   echo '</pre>';
-  mysqli_close($conn);
+
+  close($conn);
+
 ?>
 

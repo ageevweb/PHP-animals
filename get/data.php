@@ -18,10 +18,12 @@
 
   $a = [5, 10, 15, 20];
   print_r($a);
-  echo $a[3]
 
   foreach($a as $key => $value){
     echo $value."<br>";
   }
+
+  $b = ["name"=>"andy", "city"=>"spb"];
+  print_r($b['name']);
 ?>
 

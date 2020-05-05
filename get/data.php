@@ -1,19 +1,27 @@
 <?php
-  var_dump($_GET);
+  // var_dump($_GET);
 
-  // print_r($_GET);
+  // // print_r($_GET);
 
-  function checkVars($v){
-    if(isset($v) AND trim($v) != ''){
-        return $v;
-    } else {
-        exit("Var is not defined");
-    }
+  // function checkVars($v){
+  //   if(isset($v) AND trim($v) != ''){
+  //       return $v;
+  //   } else {
+  //       exit("Var is not defined");
+  //   }
+  // }
+
+  // $a1 = checkVars($_GET['a1']);
+  // $a2 = checkVars($_GET['a2']);
+
+  // echo $a1 + $a2;
+
+  $a = [5, 10, 15, 20];
+  print_r($a);
+  echo $a[3]
+
+  foreach($a as $key => $value){
+    echo $value."<br>";
   }
-
-  $a1 = checkVars($_GET['a1']);
-  $a2 = checkVars($_GET['a2']);
-
-  echo $a1 + $a2;
 ?>
 

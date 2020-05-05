@@ -13,14 +13,34 @@
 
 
 <?php
-  $dir = 'img';
-  if (is_dir($dir)){
-    $openDir = opendir($dir);
-    while(($file = readdir($openDir)) !== false) {
-      if($file != "." && $file != "..") {
-        echo $file.'<br>';
-      }
-    }
+  require_once('config.php');
+
+  $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+  mysqli_set_charset($conn, "utf8");
+  // check connection
+  if(!$conn){
+    die("Connection feiled" . mysqli_connect_error());
   }
+  // запрос в базу
+  $sql = "SELECT * FROM goods";
+  // $sql = "SELECT name,cost FROM goods WHERE cost > 30";
+  $result = mysqli_query($conn, $sql);
+
+  var_dump(mysqli_num_rows($result)); // колличество строк в таблице
+
+  $a = [];
+
+  if(mysqli_num_rows($result) > 0){
+    while($row = mysqli_fetch_assoc($result)){
+      $a[] = $row;
+    } 
+  } else { 
+    echo '0 results' ;
+  }
+  
+  echo '<pre>';
+  print_r($a);
+  echo '</pre>';
+  mysqli_close($conn);
 ?>
 

@@ -83,7 +83,45 @@
     
     // чтение, запись, перезапись файла
     // 10 урок
+
+
+    //  BD
+    // подключение выносим в отдельный файл + define(определение констан в глобальную обоасть видимости)
+    define('SERVERNAME', 'localhost');
+    define('USERNAME', 'root');
+    define('PASSWORD', '');
+    define('DBNAME', 'course-php');
+
+    // подключение, запрос и вывод
+    require_once('config.php');
+
+    $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+    mysqli_set_charset($conn, "utf8");
+    // check connection
+    if(!$conn){
+        die("Connection feiled" . mysqli_connect_error());
+    }
+    // запрос в базу
+    $sql = "SELECT * FROM goods";
+    // $sql = "SELECT name,cost FROM goods WHERE cost > 30";
+    $result = mysqli_query($conn, $sql);
+
+    var_dump(mysqli_num_rows($result)); // колличество строк в таблице
+
+    $a = [];
+
+    if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_assoc($result)){
+        $a[] = $row;
+        } 
+    } else { 
+        echo '0 results' ;
+    }
     
+    echo '<pre>';
+    print_r($a);
+    echo '</pre>';
+    mysqli_close($conn);
 ?>
 
 

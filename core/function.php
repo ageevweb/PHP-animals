@@ -12,7 +12,7 @@
 
 
   function select($conn){
-    $sql = "SELECT * FROM goods";
+    $sql = "SELECT * FROM info";
     // $sql = "SELECT name,cost FROM goods WHERE cost > 30";
     $result = mysqli_query($conn, $sql);
     // var_dump(mysqli_num_rows($result)); // колличество строк в таблице

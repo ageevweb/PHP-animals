@@ -2,5 +2,5 @@
   define('SERVERNAME', 'localhost');
   define('USERNAME', 'root');
   define('PASSWORD', '');
-  define('DBNAME', 'course-php');
+  define('DBNAME', 'animals_project');
 ?>

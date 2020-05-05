@@ -67,6 +67,19 @@
     $b['sex'] = "male"; //добавить элемент
     in_array('hello', $b); // поиск элемента в массиве
     array_key_exists("name", $b);
+
+    
+    // read dir
+    $dir = 'img';
+    if (is_dir($dir)){
+      $openDir = opendir($dir);
+      while(($file = readdir($openDir)) !== false) {
+        if($file != "." && $file != "..") {
+          echo $file.'<br>';
+        }
+      }
+    }
+
 ?>
 
 

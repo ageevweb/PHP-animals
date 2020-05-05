@@ -12,13 +12,15 @@
   </head>
   <body>
 
-  <form action="add_post.php" method="POST">
+  <form action="add_post.php" method="POST" enctype="multipart/form-data">
     title: <br>
     <input type="text" name="title"> <br>
     mini description: <br>
     <input type="text" name="mini-descr"> <br>
     description: <br>
     <input type="text" name="description"> <br>
+    image: <br>
+    <input type="file" name="image"> <br>
     <input type="submit" value="add post">
   </form>
 

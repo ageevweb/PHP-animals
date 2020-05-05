@@ -10,7 +10,11 @@
 
   $conn = connect();
 
-  $sql = "INSERT INTO info (title, descr_min, description) VALUES ('".$title."', '".$descr_mini."','".$description."')";
+  // print_r($_FILES);
+  // загружаем фото
+  move_uploaded_file($_FILES[image]['tmp_name'], 'images/'.$_FILES['image']['name']);
+
+  $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descr_mini."','".$description."', '".$_FILES['image']['name']."')";
   if(mysqli_query($conn, $sql)){
     echo "new record successfully";
   } else {
@@ -18,9 +22,6 @@
   }
 
   close($conn);
-
-
-
 
   // update--------------------------------------------------------------------
   // $newPrice = 55;

@@ -16,6 +16,7 @@
 
     $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descr_mini."','".$description."', '".$_FILES['image']['name']."')";
     if(mysqli_query($conn, $sql)){
+      setcookie('bd_updated_success', 1, time()+10);
       header('Location: /');
     } else {
       echo "error:" .$sql.mysqli_error($conn);

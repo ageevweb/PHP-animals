@@ -11,6 +11,7 @@
   }
 
 
+
   function select($conn){
     $sql = "SELECT * FROM info";
     // $sql = "SELECT name,cost FROM goods WHERE cost > 30";
@@ -26,17 +27,16 @@
     return $a;
   }
 
+
+
   function selectMain($conn){
     $offset = 0;
-
     if(isset($_GET['page']) && trim($_GET['page']) != 0){
       $offset = trim($_GET['page']);
     }
-
     $sql = "SELECT * FROM info ORDER BY id DESC LIMIT 3 OFFSET ".$offset*3;
     $result = mysqli_query($conn, $sql);
     $a = [];
-  
     if(mysqli_num_rows($result) > 0){
       while($row = mysqli_fetch_assoc($result)){
         $a[] = $row;
@@ -45,12 +45,57 @@
     return $a;
   }
 
+
+
   function paginationCount($conn){
     $sql = "SELECT * FROM info";
     $result = mysqli_query($conn, $sql);
     $result = mysqli_num_rows($result);
     return ceil($result/3);
   }
+
+
+
+
+  function getAllTags($conn){
+    $sql = "SELECT DISTINCT(tag) FROM tag";
+    $result = mysqli_query($conn, $sql);
+    $a = [];
+  
+    if(mysqli_num_rows($result) > 0){
+      while($row = mysqli_fetch_assoc($result)){
+        $a[] = $row['tag'];
+      } 
+    }
+    return $a;
+  }
+
+
+  
+  function getPostFromTag($conn){
+    $sql = "SELECT post FROM tag WHERE tag='".$_GET['tag']."'";
+    $result = mysqli_query($conn, $sql);
+    $a = [];
+  
+    if(mysqli_num_rows($result) > 0){
+      while($row = mysqli_fetch_assoc($result)){
+        $a[] = $row['post'];
+      } 
+    }
+
+    $sql = "SELECT * FROM info WHERE id in (".join(",", $a).")";
+    $result = mysqli_query($conn, $sql);
+    
+    $a = [];
+    if(mysqli_num_rows($result) > 0){
+      while($row = mysqli_fetch_assoc($result)){
+        $a[] = $row;
+      } 
+    }
+    return $a;
+  }
+
+
 
   function close($conn){
     mysqli_close($conn);

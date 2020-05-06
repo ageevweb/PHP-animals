@@ -21,16 +21,14 @@
   $print .= '</table>';
 
   echo $print;
+  
   echo '<a href="admin_create.php"> <button>add new</button> </a>';
-
 
   // echo '<pre>';
   // print_r($data);
   // echo '</pre>';
-
-
   close($conn);
-  ?>
+?>
 
 <html lang="en">
   <head>

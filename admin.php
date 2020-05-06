@@ -1,32 +1,36 @@
 <?php
   require_once 'core/config.php';
   require_once 'core/function.php';
+
+  if(isset($_COOKIE['bd_updated_success']) && $_COOKIE['bd_updated_success'] == 1){
+    setcookie('bd_updated_success', 1, time()-10);
+    echo 'updated successfully';
+  }
+
+  echo '<h2>Admin Panel</h2>';
+
   $conn = connect();
-  $data = selectMain($conn);
-  $countPage = paginationCount($conn);
-  close($conn);
-?>
 
-<?php
-  $out= '';
+  $data = select($conn);
+
+  $print = '<table>';
+  $print .= '<tr><th>Id</th><th>Title</th><th>DescrMin</th><th>Description</th><th>Image</th></tr>';
   for($i=0; $i<count($data); $i++){
-    $out .="<div class='post-item'>";
-    $out .="<img src='images/{$data[$i]['image']}'>";
-    $out .="<h4>{$data[$i]['title']}</h4>";
-    $out .="<p>{$data[$i]['descr_min']}</p>";
-    $out .="<a>Read More</a>";
-    $out .="</div>";
+    $print .= "<tr><td>{$data[$i]['id']}</td><td>{$data[$i]['title']}</td><td>{$data[$i]['descr_min']}</td><td>{$data[$i]['description']}</td><td><img src='images/{$data[$i]['image']}' width='100px'></td></tr>";
   }
-  echo $out;
+  $print .= '</table>';
 
-  for($i=0; $i < $countPage; $i++){
-    $j = $j+1;
-    echo "<a href='/index.php?page={$i}'>$j</a>";
-  }
-?>
+  echo $print;
+  echo '<a href="admin_create.php"> <button>add new</button> </a>';
 
 
+  // echo '<pre>';
+  // print_r($data);
+  // echo '</pre>';
 
+
+  close($conn);
+  ?>
 
 <html lang="en">
   <head>

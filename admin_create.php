@@ -17,7 +17,7 @@
     $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descr_mini."','".$description."', '".$_FILES['image']['name']."')";
     if(mysqli_query($conn, $sql)){
       setcookie('bd_updated_success', 1, time()+10);
-      header('Location: /');
+      header('Location: /admin.php');
     } else {
       echo "error:" .$sql.mysqli_error($conn);
     }
@@ -50,6 +50,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
+
+  <h2>Create new Post</h2>
 
   <form action="" method="POST" enctype="multipart/form-data">
     title: <br>

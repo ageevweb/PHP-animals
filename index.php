@@ -1,58 +1,69 @@
 <?php
-  require_once 'core/config.php';
-  require_once 'core/function.php';
-  $conn = connect();
+  require_once('./templates/header.php');
   $data = selectMain($conn);
   $countPage = paginationCount($conn);
   $tag = getAllTags($conn);
   $cat = getAllCatInfo($conn);
   close($conn);
-
-  $out = '';
-  for ($i=0; $i < count($cat); $i++){
-      $out .='<p><a href="/category.php?id='.$cat[$i]['id'].'">'.$cat[$i]['description'].'</a></p>';
-      $out.='<hr>';
-  }
-  echo $out;
 ?>
-
-
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-  <div class="content-wrap">
-  <?php
-    $out = '';
-    for ($i=0; $i < count($data); $i++){
-        $out .="<img src='/images/{$data[$i]['image']}' width='100'>";
-        $out .="<h2>{$data[$i]['title']}</h2>";
-        $out .="<p>{$data[$i]['descr_min']}</p>";
-        $out .='<p><a href="/arcticle.php?id='.$data[$i]['id'].'">Read more...</a></p>';
-        $out.='<hr>';
-    }
-    echo $out;
-  ?>
-  </div>
   
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="row">
+        <?php
+          $out = '';
+          for ($i=0; $i < count($data); $i++){
+            $out .="<div class='col-lg-4 col-md-6'>";
+            $out .="<div class='card'>";
+            $out .="<img class='card-img-top' src='/images/{$data[$i]['image']}'>";
+            $out .="<div class='card-body'>";
+            $out .="<h5 class='card-title'>{$data[$i]['title']}</h5>";
+            $out .="<p class='card-text'>{$data[$i]['descr_min']}</p>";
+            $out .='<p><a class="btn btn-primary" href="/arcticle.php?id='.$data[$i]['id'].'">Read more...</a></p>';
+            $out .="</div>";
+            $out .="</div>";
+            $out .="</div>";
+          } 
+          echo $out;
+        ?>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <?php
+        $out = '<div class="list-group">';
+        for ($i=0; $i < count($cat); $i++){
+          $out .='<a class="list-group-item list-group-item-action" href="/category.php?id='.$cat[$i]['id'].'">'.$cat[$i]['description'].'</a>';
+        }
+        $out .= '</div>';
+        echo $out;
+      ?>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <nav>
+    <ul class="pagination">
+      <?php
+        for ($i=0; $i < $countPage; $i++){
+          $j = $i+1;
+          echo "<li class='page-item'><a class='page-link' href='/index.php?page={$i}' style='padding: 5px;'>{$j}</a></li>";
+        }
+      ?>
+    </ul>
+  </nav>
+</div>
+
+<div class="container">
   <?php
-    for ($i=0; $i < $countPage; $i++){
-        $j = $i+1;
-        echo "<a href='/index.php?page={$i}' style='padding: 5px;'>{$j}</a>";
-    }
     echo '<hr>';
     for ($i=0; $i < count($tag); $i++){
-        echo "<a href='/tag.php?tag={$tag[$i]}' style='padding: 5px;'>{$tag[$i]}</a>";
+        echo "<a class='badge badge-info p-2 m-1' href='/tag.php?tag={$tag[$i]}' style='padding: 5px;'>{$tag[$i]}</a>";
     }
   ?>
+</div>
 
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+<?php
+  require_once('./templates/footer.php');
+?>

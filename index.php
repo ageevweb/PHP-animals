@@ -5,7 +5,15 @@
   $data = selectMain($conn);
   $countPage = paginationCount($conn);
   $tag = getAllTags($conn);
+  $cat = getAllCatInfo($conn);
   close($conn);
+
+  $out = '';
+  for ($i=0; $i < count($cat); $i++){
+      $out .='<p><a href="/category.php?id='.$cat[$i]['id'].'">'.$cat[$i]['description'].'</a></p>';
+      $out.='<hr>';
+  }
+  echo $out;
 ?>
 
 
@@ -17,7 +25,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
-  <div class="content-wrap" style="display: flex;">
+  <div class="content-wrap">
   <?php
     $out = '';
     for ($i=0; $i < count($data); $i++){

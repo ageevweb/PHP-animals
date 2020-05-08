@@ -7,21 +7,36 @@
     $title = $_POST['title'];
     $descr_mini = $_POST['mini-descr'];
     $description = $_POST['description'];
+    $tags = trim($_POST['tag']);
+    $tags = explode("," ,$tags);
+    $newTags = [];
+
+    for($i=0; $i < count($tags); $i++){
+      if(trim($tags[$i]) != ''){
+        $newTags[] = trim($tags[$i]);
+      }
+    }
+
 
     $conn = connect();
 
     // print_r($_FILES);
     // загружаем фото
-    move_uploaded_file($_FILES[image]['tmp_name'], 'images/'.$_FILES['image']['name']);
+    // move_uploaded_file($_FILES[image]['tmp_name'], 'images/'.$_FILES['image']['name']);
 
-    $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descr_mini."','".$description."', '".$_FILES['image']['name']."')";
-    if(mysqli_query($conn, $sql)){
-      setcookie('bd_updated_success', 1, time()+10);
+    $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descrMin."', '".$description."', '".$_FILES['image']['name']."')";
+    if (mysqli_query($conn, $sql)) {
+      $lastId = mysqli_insert_id ($conn);
+      for ($i = 0; $i < count($newTags); $i++){
+          $sql = "INSERT INTO tag (tag, post) VALUES ('".$newTags[$i]."', ".$lastId.")";
+          mysqli_query($conn, $sql);
+      }
+      // var_dump($lastId); 
+      setcookie('bd_create_success', 1, time()+10);
       header('Location: /admin.php');
     } else {
-      echo "error:" .$sql.mysqli_error($conn);
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
-
     close($conn);
   }
   
@@ -62,12 +77,8 @@
     <input type="text" name="description"> <br>
     tags: <br>
     <input type="text" name="tag"> <br>
-
-  
     image: <br>
     <input type="file" name="image"> <br>
-
-
     
     <input type="submit" value="add post"> <br>
 

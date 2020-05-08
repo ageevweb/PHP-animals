@@ -46,6 +46,19 @@
   }
 
 
+  
+  function selectArticle($conn){
+    $sql = "SELECT * FROM info WHERE id=".$_GET['id'];
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    } 
+    return false;
+  }
+
+
 
   function paginationCount($conn){
     $sql = "SELECT * FROM info";
@@ -71,27 +84,42 @@
   }
 
 
+
+  function getArticleTags($conn){
+    $sql = "SELECT * FROM tag WHERE post=".$_GET['id'];
+    $result = mysqli_query($conn, $sql);
+    
+    $a = array();
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $a[] = $row;
+        }
+    } 
+    return $a;
+  }
   
+
+
   function getPostFromTag($conn){
     $sql = "SELECT post FROM tag WHERE tag='".$_GET['tag']."'";
     $result = mysqli_query($conn, $sql);
-    $a = [];
-  
-    if(mysqli_num_rows($result) > 0){
-      while($row = mysqli_fetch_assoc($result)){
-        $a[] = $row['post'];
-      } 
-    }
+    
+    $a = array();
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $a[] = $row['post'];
+        }
+    } 
 
     $sql = "SELECT * FROM info WHERE id in (".join(",", $a).")";
     $result = mysqli_query($conn, $sql);
     
-    $a = [];
-    if(mysqli_num_rows($result) > 0){
-      while($row = mysqli_fetch_assoc($result)){
-        $a[] = $row;
-      } 
-    }
+    $a = array();
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $a[] = $row;
+        }
+    } 
     return $a;
   }
 

@@ -3,13 +3,7 @@ require_once('template/header.php');
 
 $data = select($conn);
 close($conn);
-$flash='';
-if (isset($_COOKIE['bd_create_success']) AND $_COOKIE['bd_create_success']!=''){
-    if ($_COOKIE['bd_create_success'] == 1) {
-        setcookie('bd_create_success', 1, time()-10);
-        $flash =  "New record created successfully";
-    }
-}?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +22,10 @@ if (isset($_COOKIE['bd_create_success']) AND $_COOKIE['bd_create_success']!=''){
             echo '<div class="mt-2 mb-2 text-right">';
             echo '<a href="/admin_create.php"><button class="btn btn-success">Add new</button></a></div>';
             $out = '<table  class="table table-striped">';
-            $out .='<tr><th>ID</th><th>Title</th><th>Description min</th><th>Image</th><th>Action</th></tr>';
+            $out .='<tr><th>ID</th><th>Title</th><th>Description min</th><th>Image</th><th>Update</th><th>Action</th></tr>';
             for ($i=0; $i < count($data); $i++){
             $out .="<tr><td>{$data[$i]['id']}</td><td>{$data[$i]['title']}</td><td>{$data[$i]['descr_min']}</td><td><img src='/images/{$data[$i]['image']}' width='40'></td>";
+            $out .="<td><a href='/admin_update.php?id={$data[$i]['id']}'>update</p></td>";
             $out .="<td><p class='check-delete' data='{$data[$i]['id']}'>del</p></td></tr>";
             }
             $out .='</table>';
@@ -56,7 +51,7 @@ if (isset($_COOKIE['bd_create_success']) AND $_COOKIE['bd_create_success']!=''){
         }
     }
 </script>
-
+</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

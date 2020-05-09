@@ -1,8 +1,8 @@
 <?php
-    require_once('template/header.php');
-    $data = getPostFromCategory($conn);
-    $catList = getCatInfo($conn);
-    close($conn);
+require_once('template/header.php');
+$data = getPostFromCategory($conn);
+$catList = getCatInfo($conn);
+close($conn);
 ?>
 
 <div class="container">
@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-
+</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

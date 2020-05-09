@@ -4,32 +4,45 @@ $data = getPostFromTag($conn);
 $tag = getAllTags($conn);
 close($conn);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<?php
-$out = '';
-for ($i=0; $i < count($data); $i++){
-    $out .="<img src='/images/{$data[$i]['image']}' width='100'>";
-    $out .="<h2>{$data[$i]['title']}</h2>";
-    $out .="<p>{$data[$i]['descr_min']}</p>";
-    $out .="<p><a href='/arcticle.php?id='{$data[$i]['id']}'>Read more...</a></p>";
-    $out.='<hr>';
-}
-echo $out;
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+        <div class="row">
+            <?php
+            $out = '';
+            for ($i=0; $i < count($data); $i++){
+                $out .='<div class="col-lg-4 col-md-6">';
+                $out .='<div class="card">';
+                $out .="<img src='/images/{$data[$i]['image']}' class='card-img-top'>";
+                $out .='<div class="card-body">';
+                $out .="<h5 class='card-title'>{$data[$i]['title']}</h5>";
+                $out .="<p class='card-text'>{$data[$i]['descr_min']}</p>";
+                $out .='<p class="text-right"><a href="/arcticle.php?id='.$data[$i]['id'].'" class="btn btn-primary">Read more...</a></p>';
+                $out .='</div>';
+                $out .='</div>';
+                $out .='</div>';
+            }
+            echo $out;
+            ?>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <?php
+                    for ($i=0; $i < count($tag); $i++){
+                        echo "<a href='/tag.php?tag={$tag[$i]}' style='padding: 5px;' class='badge badge-info p-2 m-1'>{$tag[$i]}</a>";
+                    }
+                ?>
+            </div>
+        </div>
+    </div><!--col-lg-9-->
+    <div class="col-lg-3">
+        <?php require_once('template/nav.php'); ?>
+    </div>
+            
+    </div><!--row-->
+</div><!--container-->
 
-echo '<hr>';
-for ($i=0; $i < count($tag); $i++){
-    echo "<a href='/tag.php?tag={$tag[$i]}' style='padding: 5px;'>{$tag[$i]}</a>";
-}
-?>
-
+</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

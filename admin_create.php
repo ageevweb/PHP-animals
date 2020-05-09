@@ -68,7 +68,7 @@ if (isset($_POST['title']) AND $_POST['title'] !='') {
     </div>
 </div>
 
-
+</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

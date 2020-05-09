@@ -1,9 +1,9 @@
 <footer class="footer navbar-dark bg-dark mt-5">
-  <div class="container pt-5 pb-5">
-    <span class="text-muted">Place sticky footer content here.</span>
-  </div>
-</footer>
-
+      <div class="container pt-5 pb-5">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
+</div><!--wrap-->
  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

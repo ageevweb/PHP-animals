@@ -62,6 +62,7 @@
     </div>
 </div>
 </div>
+</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

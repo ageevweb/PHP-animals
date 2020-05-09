@@ -1,6 +1,7 @@
-.pagination{
-  margin-top: 30px;
+body{
+  padding-bottom: 120px !important;
 }
+
 
 .footer{
   position: fixed ;

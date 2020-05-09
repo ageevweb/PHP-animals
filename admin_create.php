@@ -1,91 +1,74 @@
 <?php
-  require_once 'core/config.php';
-  require_once 'core/function.php';
+require_once('template/header.php');
 
-  // var_dump($_POST);
-  if(isset($_POST['title']) && trim($_POST['title']) !== ''){
+if (isset($_POST['title']) AND $_POST['title'] !='') {
     $title = $_POST['title'];
-    $descr_mini = $_POST['mini-descr'];
+    $descrMin = $_POST['descr-min'];
     $description = $_POST['description'];
     $tags = trim($_POST['tag']);
-    $tags = explode("," ,$tags);
+    $tags = explode(",", $tags);
     $newTags = [];
-
-    for($i=0; $i < count($tags); $i++){
-      if(trim($tags[$i]) != ''){
-        $newTags[] = trim($tags[$i]);
-      }
+    for ($i = 0; $i < count($tags); $i++){
+        if (trim($tags[$i])!='') {
+            $newTags[] = trim($tags[$i]);
+        }
     }
 
 
+//     move_uploaded_file($_FILES['image']['tmp_name'], 'images/'.$_FILES['image']['name']);
+
     $conn = connect();
-
-    // print_r($_FILES);
-    // загружаем фото
-    // move_uploaded_file($_FILES[image]['tmp_name'], 'images/'.$_FILES['image']['name']);
-
     $sql = "INSERT INTO info (title, descr_min, description, image) VALUES ('".$title."', '".$descrMin."', '".$description."', '".$_FILES['image']['name']."')";
     if (mysqli_query($conn, $sql)) {
-      $lastId = mysqli_insert_id ($conn);
-      for ($i = 0; $i < count($newTags); $i++){
-          $sql = "INSERT INTO tag (tag, post) VALUES ('".$newTags[$i]."', ".$lastId.")";
-          mysqli_query($conn, $sql);
-      }
-      // var_dump($lastId); 
-      setcookie('bd_create_success', 1, time()+10);
-      header('Location: /admin.php');
+        $lastId = mysqli_insert_id ($conn);
+        for ($i = 0; $i < count($newTags); $i++){
+            $sql = "INSERT INTO tag (tag, post) VALUES ('".$newTags[$i]."', ".$lastId.")";
+            mysqli_query($conn, $sql);
+        }
+        // var_dump($lastId); 
+        setcookie('bd_create_success', 1, time()+10);
+        header('Location: /admin.php');
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
     close($conn);
-  }
-  
-  // update--------------------------------------------------------------------
-  // $newPrice = 55;
-  // $id = 1;
-  // $newName = 'bananaaaa';
+}
 
-  // $sql = "UPDATE goods SET cost=".$newPrice." WHERE id=".$id;
-  // $sql = "UPDATE goods SET name='".$newName."' WHERE id=".$id;
-  // строковое значение обернуть еще в одни скобки ''
-
-  // if(mysqli_query($conn, $sql)){
-  //   echo "updated successfully";
-  // } else {
-  //   echo "error updating".mysqli_error($conn);
-  // }
-  // update end--------------------------------------------------------------------
 ?>
+<div class="container">
+    <div class="row">
+    <div class="col-lg-12">
+    <h2>Create post</h2>
+    <form action="" method="POST"  enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" name="title" class="form-control" id="title">
+        </div>
+        <div class="form-group">
+            <label for="descr-min">Min description</label>
+            <input type="text" name="descr-min" class="form-control" id="descr-min">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" id="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="image">Photo</label>
+            <input type="file" name="image" class="form-control-file" id="image">
+        </div>
+        <div class="form-group">
+            <label for="tag">Tags</label>
+            <input type="text" name="tag" class="form-control" id="tag" placeholder="one,two">
+        </div>
+        <div class="form-group text-right">
+            <input type="submit" value="Add new article" class="btn btn-success">
+        </div>
+    </form>
+        </div>
+    </div>
+</div>
 
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-
-  <h2>Create new Post</h2>
-
-  <form action="" method="POST" enctype="multipart/form-data">
-    title: <br>
-    <input type="text" name="title"> <br>
-    mini description: <br>
-    <input type="text" name="mini-descr"> <br>
-    description: <br>
-    <input type="text" name="description"> <br>
-    tags: <br>
-    <input type="text" name="tag"> <br>
-    image: <br>
-    <input type="file" name="image"> <br>
-    
-    <input type="submit" value="add post"> <br>
-
-  </form>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+<?php 
+    require_once('template/footer.php');
+?>

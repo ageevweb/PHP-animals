@@ -1,45 +1,45 @@
 <?php
-  require_once 'core/config.php';
-  require_once 'core/function.php';
+require_once('template/header.php');
 
-  if(isset($_COOKIE['bd_updated_success']) && $_COOKIE['bd_updated_success'] == 1){
-    setcookie('bd_updated_success', 1, time()-10);
-    echo 'updated successfully';
-  }
+$data = select($conn);
+close($conn);
+$flash='';
+if (isset($_COOKIE['bd_create_success']) AND $_COOKIE['bd_create_success']!=''){
+    if ($_COOKIE['bd_create_success'] == 1) {
+        setcookie('bd_create_success', 1, time()-10);
+        $flash =  "New record created successfully";
+    }
+}?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        <?php
+            echo   $flash;
+            echo '<h2>Admin-panel</h2>';
+            echo '<div class="mt-2 mb-2 text-right">';
+            echo '<a href="/admin_create.php"><button class="btn btn-success">Add new</button></a></div>';
+            $out = '<table  class="table table-striped">';
+            $out .='<tr><th>ID</th><th>Title</th><th>Description min</th><th>Image</th></tr>';
+            for ($i=0; $i < count($data); $i++){
+            $out .="<tr><td>{$data[$i]['id']}</td><td>{$data[$i]['title']}</td><td>{$data[$i]['descr_min']}</td><td><img src='/images/{$data[$i]['image']}' width='40'></td></tr>";
+            }
+            $out .='</table>';
+            echo $out;
+            ?>
+        </div>
+    </div>
+</div>
 
-  echo '<h2>Admin Panel</h2>';
-
-  $conn = connect();
-
-  $data = select($conn);
-
-  $print = '<table>';
-  $print .= '<tr><th>Id</th><th>Title</th><th>DescrMin</th><th>Description</th><th>Image</th></tr>';
-  for($i=0; $i<count($data); $i++){
-    $print .= "<tr><td>{$data[$i]['id']}</td><td>{$data[$i]['title']}</td><td>{$data[$i]['descr_min']}</td><td>{$data[$i]['description']}</td><td><img src='images/{$data[$i]['image']}' width='100px'></td></tr>";
-  }
-  $print .= '</table>';
-
-  echo $print;
-  
-  echo '<a href="admin_create.php"> <button>add new</button> </a>';
-
-  // echo '<pre>';
-  // print_r($data);
-  // echo '</pre>';
-  close($conn);
+<?php 
+    require_once('template/footer.php');
 ?>
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>

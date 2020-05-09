@@ -1,7 +1,5 @@
 <?php
-require_once 'core/config.php';
-require_once 'core/function.php';
-$conn = connect();
+require_once('template/header.php');
 $data = getPostFromTag($conn);
 $tag = getAllTags($conn);
 close($conn);
@@ -30,4 +28,8 @@ echo '<hr>';
 for ($i=0; $i < count($tag); $i++){
     echo "<a href='/tag.php?tag={$tag[$i]}' style='padding: 5px;'>{$tag[$i]}</a>";
 }
+?>
+
+<?php 
+    require_once('template/footer.php');
 ?>

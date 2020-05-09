@@ -144,6 +144,15 @@ function getAllCatInfo($conn){
   return $a;
 }
 
+function deleteArticle($conn,$id){
+  $sql = "DELETE FROM info WHERE id=".$id;
+  if (mysqli_query($conn, $sql)) {
+      return true;
+  } else {
+      return "Error deleting record: " . mysqli_error($conn);
+  }
+}
+
 function close($conn){
   mysqli_close($conn);
 }

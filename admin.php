@@ -1,5 +1,5 @@
 <?php
-require_once('template/header.php');
+require_once('template/header_admin.php');
 
 $data = select($conn);
 close($conn);
@@ -51,7 +51,6 @@ close($conn);
         }
     }
 </script>
-</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

@@ -42,7 +42,6 @@ close($conn);
     </div><!--row-->
 </div><!--container-->
 
-</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

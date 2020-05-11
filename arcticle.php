@@ -34,7 +34,6 @@ echo "<a href='/tag.php?tag={$tag[$i]['tag']}' style='padding: 5px;' class='badg
         </div>
     </div>
 </div>
-</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

@@ -98,7 +98,6 @@ require_once('template/header_admin.php');
     </div>
 </div>
 
-</div><!--content-->
 <?php 
     require_once('template/footer.php');
 ?>

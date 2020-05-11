@@ -1,3 +1,4 @@
+</div><!--content-->
 <footer class="footer navbar-dark bg-dark mt-5">
       <div class="container pt-5 pb-5">
         <span class="text-muted">Place sticky footer content here.</span>
